@@ -1,0 +1,24 @@
+body {
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+    height: 100vh;
+}
+
+.flex {
+    display: flex;
+}
+
+.grid-wrapper {
+    border: solid 2px black;
+    justify-content: center;
+    align-items: center;
+    width: 512px;
+    height: 512px;
+
+}
+
+.sixteen .grid-row .draw-box {
+    width: 128px;
+    height: 128px;
+}
