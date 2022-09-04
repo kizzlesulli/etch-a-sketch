@@ -46,6 +46,9 @@ function applyColor (evt) {
         let rainbowColor = getRainbowColor();
 
         evt.target.style.background = '#' + rainbowColor;
+    } else if (color === 'erase') {
+
+        evt.target.style.background = 'white';
     }
 } 
 
