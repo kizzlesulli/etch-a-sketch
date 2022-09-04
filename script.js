@@ -9,11 +9,17 @@ const divs = {
     buttons: document.querySelectorAll('.button')
 }
 
-//Change color with user input
+//Global configuration variables
 
 let color = 'black';
+let mouseBehavior = 'mouseover';
+let target;
+let colorInterval;
 
-function getRainbowColor () {
+
+//Change color with user input
+
+function getRainbowHex () {
 
     let randSeven = Math.floor(Math.random() * 7);
     
@@ -35,22 +41,36 @@ function getRainbowColor () {
     }
 }
 
-function applyColor (evt) {
+function getColor () {
     
-    if (color === 'black') {
+    if (color === 'rainbow') {
 
-        evt.target.style.background = 'black';
+        let rainbowColor = '#' + getRainbowHex();
+        
+        return rainbowColor
     
-    } else if (color === 'rainbow') {
-
-        let rainbowColor = getRainbowColor();
-        evt.target.style.background = '#' + rainbowColor;
-    
-    } else if (color === 'white') {
-
-        evt.target.style.background = 'white';
+    } else {
+        
+        return color;
     }
 } 
+
+function applyColor (evt) {
+
+    if (mouseBehavior === 'mouseover') {
+
+        evt.target.style.background = getColor();
+    
+    } else if (mouseBehavior === 'mousedown') {
+
+        clearInterval(colorInterval);
+
+        colorInterval = setInterval(function() {
+    
+                target.style.background = getColor();
+        }, 1);
+    }
+}
 
 //Change grid layout with user input
 
@@ -77,8 +97,9 @@ function makeRow (gridSize) {
 
         let cell = document.createElement('div');
         cell.classList.add('draw-box');
-        cell.addEventListener('mouseover', e => applyColor(e));
-
+        cell.addEventListener(mouseBehavior, e => applyColor(e));
+        cell.addEventListener('mouseover', e => target = e.target);
+        
         row.appendChild(cell);
     }
 
@@ -93,11 +114,55 @@ function changeGrid (gridSize, gridClass) {
 
     for (let rows = gridSize; rows > 0; rows--) {
 
-        let row = makeRow(gridSize);
+        let row = makeRow(gridSize, mouseBehavior);
         divs.gridWrapper.appendChild(row);
     }
 }
 
+//Change mouse behavior between press and drag, and hover
+
+function changeMouseBehavior(buttonToggled, evt) {
+
+    let drawBoxes = document.querySelectorAll('.draw-box');
+    let gridSize = parseInt(document.querySelector('.grid-picker.selected').innerHTML);
+    let gridClass = document.querySelector('.grid-picker.selected').classList[0];
+
+    if (buttonToggled === true) {
+        
+        evt.target.classList.remove('selected');
+        mouseBehavior = 'mouseover';
+        changeGrid(gridSize, gridClass);
+        // document.removeEventListener('mouseup', () => clearInterval(colorInterval));
+        // drawBoxes.forEach(box => box.removeEventListener('mousedown', e => applyColor(e)));
+        // drawBoxes.forEach(box => box.removeEventListener('mouseover', e => target = e.target));
+        // drawBoxes.forEach(box => box.addEventListener('mouseover', e => applyColor(e)))
+
+    } else if (buttonToggled === false) {
+        
+        evt.target.classList.add('selected');
+        mouseBehavior = 'mousedown';
+        changeGrid(gridSize, gridClass);
+        // document.addEventListener('mouseup', () => clearInterval(colorInterval));
+        // drawBoxes.forEach(box => box.removeEventListener('mouseover', e => applyColor(e)));
+        // drawBoxes.forEach(box => box.addEventListener('mouseover', e => target = e.target));
+        // drawBoxes.forEach(box => box.addEventListener('mousedown', e => applyColor(e)))
+    }
+    
+    // if (mouseBehavior = 'mouseover') {
+        
+    //     document.removeEventListener('mouseup', () => clearInterval(colorInterval));
+    //     drawBoxes.forEach(box => box.removeEventListener('mousedown', e => applyColor(e)));
+    //     drawBoxes.forEach(box => box.removeEventListener('mouseover', e => target = e.target));
+    //     drawBoxes.forEach(box => box.addEventListener('mouseover', e => applyColor(e)))
+
+    // } else if (mouseBehavior = 'mousedown') {
+
+    //     document.addEventListener('mouseup', () => clearInterval(colorInterval));
+    //     drawBoxes.forEach(box => box.removeEventListener('mouseover', e => applyColor(e)));
+    //     drawBoxes.forEach(box => box.addEventListener('mouseover', e => target = e.target));
+    //     drawBoxes.forEach(box => box.addEventListener('mousedown', e => applyColor(e)))
+    // }
+}
 
 divs.buttons.forEach(button => button.addEventListener('click', e => {
 
@@ -107,47 +172,37 @@ divs.buttons.forEach(button => button.addEventListener('click', e => {
         let gridClass = e.target.classList[0];
 
         changeGrid(gridSize, gridClass);
+        //toggleButton(); 
 
     } else if (e.target.classList.contains('color-picker')) {
 
-        color = e.target.classList[0]; 
+        color = e.target.classList[0];
+        //toggleButton(); 
 
     } else if (e.target.classList.contains('clear')) {
 
         clearGridColor();
-    } else if (e.target.classList.contains('erase')) {
+        //toggleButton(); 
 
-        color = e.target.classList[0];
+    } else if (e.target.classList.contains('mouse-press')) {
+
+        let buttonToggled = e.target.classList.contains('selected');
+        changeMouseBehavior(buttonToggled, e);
+
+        // if (e.target.classList.contains('selected')) {
+            
+        //     e.target.classList.remove('selected');
+        //     mouseBehavior = 'mouseover';
+        //     changeMouseBehavior();
+        // } else {
+            
+        //     e.target.classList.add('selected');
+        //     mouseBehavior = 'mousedown';
+        //     changeMouseBehavior();
+        // }
     }
 }));
 
-//Drag while hovering
+document.addEventListener('mouseup', () => clearInterval(colorInterval));
 
 changeGrid(16, 'sixteen');
-
-//Draw while mousedown
-//Mouseup fails to trigger when cursor gets stuck dragging objects
-
-// let target;
-// let colorInterval;
-
-// divs.drawBoxes.forEach(box => box.addEventListener('mouseover', e => {
-    
-//     target = e.target;
-// }));
-
-// document.addEventListener('mouseup', e => {
-
-//     console.log(e.type);
-//     clearInterval(colorInterval);
-// });
-
-// divs.drawBoxes.forEach(box => box.addEventListener('mousedown', e => {
-
-//     clearInterval(colorInterval);
-
-//     colorInterval = setInterval(function() {
-
-//             target.style.background = 'black';
-//     }, 50);
-// }));
