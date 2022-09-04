@@ -51,18 +51,6 @@ function getColor () {
     }
 } 
 
-function toggleMousePosition(evt) {
-
-    if (evt.type === 'mousedown') {
-        mouseDown = true;
-
-    } else if (evt.type === 'mouseup') {
-        mouseDown = false;
-    }
-
-    console.log(evt.type, mouseDown)
-}
-
 function applyColor (evt) {
 
     //Check if mouse drag is toggled
@@ -82,12 +70,6 @@ function applyColor (evt) {
 }
 
 //Change grid layout with user input
-
-function clearGridColor() {
-    
-    let drawBoxes = document.querySelectorAll('.draw-box');
-    drawBoxes.forEach(box => box.style.background = 'white');
-}
 
 function clearGrid() {
     
@@ -114,7 +96,7 @@ function makeRow (gridSize) {
     return row;
 }
 
-function changeGrid (gridSize, gridClass) {
+function createGrid (gridSize, gridClass) {
 
     clearGrid()
     divs.gridWrapper.classList.add(gridClass);
@@ -125,6 +107,12 @@ function changeGrid (gridSize, gridClass) {
         
         divs.gridWrapper.appendChild(row);
     }
+}
+
+function clearGridColor() {
+    
+    let drawBoxes = document.querySelectorAll('.draw-box');
+    drawBoxes.forEach(box => box.style.background = 'white');
 }
 
 //Handle button presses and toggles
@@ -167,7 +155,7 @@ function handleButtonPress (evt) {
         let gridSize = parseInt(evt.target.innerHTML);
         let gridClass = evt.target.classList[0];
 
-        changeGrid(gridSize, gridClass); 
+        createGrid(gridSize, gridClass); 
 
     } else if (evt.target.classList.contains('color-picker')) {
 
@@ -183,8 +171,22 @@ function handleButtonPress (evt) {
     }
 }
 
+
+function toggleMousePosition(evt) {
+
+    if (evt.type === 'mousedown') {
+        mouseDown = true;
+
+    } else if (evt.type === 'mouseup') {
+        mouseDown = false;
+    }
+}
+
 divs.buttons.forEach(button => button.addEventListener('click', handleButtonPress));
+
+//Event listeners to draw when mouse down selected
 divs.gridWrapper.addEventListener('mousedown', toggleMousePosition);
 document.addEventListener('mouseup', toggleMousePosition);
 
-changeGrid(16, 'sixteen');
+//Create grid on page open
+createGrid(16, 'sixteen');
