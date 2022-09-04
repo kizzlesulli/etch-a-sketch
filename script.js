@@ -1,25 +1,58 @@
 const divs = {
     gridWrapper: document.querySelector('.grid-wrapper'),
-//querySelectorAll arrays
 }
+
+//Change color with user input
+
+function getColorSelection () {
+
+    let color;
+
+    Math.random
+}
+
+function applyColor (evt) {
+    
+    //let color = getColor();
+
+    evt.target.style.background = 'black';
+
+    if (color = 'black') {
+        
+        evt.target.style.background = 'black';
+    } else if(colorSelected = 'rainbow'); {
+
+        evt.target.style.background = 'black';
+    }
+
+    //red #fc0303
+    //orange #fc6b03
+    //yellow #fcf003
+    //green #03fc18
+    //blue #036ffc
+    //purple #4e03fc
+    //pink #fc03f4
+} 
 
 //Change grid layout with user input
 
-function applyColor() {
-    let color = getColorSelection();
-        
-} 
-
-function createGrid (gridSize) {
-
-
+function clearGrid () {
+    
+    divs.gridWrapper.innerHTML = '';
     divs.gridWrapper.classList.remove('sixteen');
     divs.gridWrapper.classList.remove('thirty-two');
     divs.gridWrapper.classList.remove('sixty-four');
+}
+
+function makeRow () {
+
+}
+
+function createGrid (gridSize) {
+
+    clearGrid();
     
     divs.gridWrapper.classList.add('sixteen');
-
-    divs.gridWrapper.innerHTML = '';
 
     for (let rows = gridSize; rows > 0; rows--) {
 
@@ -31,7 +64,8 @@ function createGrid (gridSize) {
             let cell = document.createElement('div');
             cell.classList.add('draw-box');
 
-            cells.addEventListener('mouseover', applyColor());
+            console.log(cell);
+            cell.addEventListener('mouseover', e => applyColor(e));
 
             row.appendChild(cell);
         }
@@ -42,7 +76,6 @@ function createGrid (gridSize) {
 
 
 //Drag while hovering
-cells.addEventListener('mouseover', e => e. target.style.background = 'black');
 
 createGrid(16);
 
