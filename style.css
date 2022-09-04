@@ -36,15 +36,16 @@ body {
 
 h3 {
     font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
     padding: 0px;
     margin-top: 0px;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 .grid-size {
     display: flex;
     justify-content: space-around;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 /* Grid styling */
@@ -82,15 +83,21 @@ h3 {
     padding: 5px;
 }
 
-.color-picker.button, .clear.button, .mouse-press.button {
+.color-picker.button, .clear.button {
     width: 75px;
     padding: 5px;  
 }
 
 .clear.button {
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
+
+.mouse-press.button {
+    width: 125px;
+    padding: 5px;
+}
+
 
 .button.selected {
     color:rgb(252, 210, 210);
