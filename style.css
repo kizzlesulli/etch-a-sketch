@@ -1,6 +1,7 @@
 body {
     margin: 0px;
     height: 100vh;
+    background-color: beige;
 }
 
 .title {
@@ -12,26 +13,32 @@ body {
 }
 
 .content-wrapper {
+    display: flex;
     justify-content: center;
     align-items: center;
     padding: 30px;
 }
 
-.flex {
-    display: flex;
+.grid-wrapper {
+    background-color:black;
+    padding: 3px;
 }
 
-.grid-wrapper {
-    border: solid 2px black;
+.grid-row {
+    width: 512px;
+    height: auto;
+    display: flex;
     justify-content: center;
     align-items: center;
-    width: 512px;
-    height: 512px;
-
 }
 
-.draw-box:hover {
-    background-color: burlywood;
+.draw-box {
+    display: inline-block;
+    background-color: white;
+}
+
+.draw-box.selected {
+    background-color: black;
 }
 
 .sixteen .grid-row .draw-box {
