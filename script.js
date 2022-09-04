@@ -1,18 +1,15 @@
 const divs = {
     gridWrapper: document.querySelector('.grid-wrapper'),
-    gridPickers: document.querySelectorAll('.grid-picker'),
-    colorPickers: document.querySelectorAll('.color-picker'),
+    mouseDownToggle: document.querySelector('.mouse-down'),
+    //Arrays
+    gridPickerButtons: document.querySelectorAll('.grid-picker'),
+    colorPickerButtons: document.querySelectorAll('.color-picker'),
     buttons: document.querySelectorAll('.button')
 }
 
 //Global configuration variables
 
-let color = 'black'; //manipulated by getColor function
-let mouseBehavior = 'mouseover'; //used to toggle hover draw or drag draw behavior
 let mouseDown; //boolean changes with mousedown and mouseup events
-let target;
-let colorInterval;
-
 
 //Change color with user input
 
@@ -40,7 +37,7 @@ function getRainbowHex () {
 
 function getColor () {
     
-    //let color = document.querySelector('.color-picker.selected').classList[0];
+    let color = document.querySelector('.color-picker.selected').classList[0];
 
     if (color === 'rainbow') {
 
@@ -68,18 +65,19 @@ function toggleMousePosition(evt) {
 
 function applyColor (evt) {
 
-    if (mouseBehavior === 'mouseover') {
+    //Check if mouse drag is toggled
+    let mouseDownToggle = divs.mouseDownToggle.classList.contains('selected');
 
+    if (mouseDownToggle === true) {
+
+        if (mouseDown === true) {
+            
+            evt.target.style.background = getColor();
+        }
+    
+    } else {
+        
         evt.target.style.background = getColor();
-    
-    } else if (mouseBehavior === 'mousedown') {
-
-        stopMouseDown();
-
-        colorInterval = setInterval(function() {
-    
-                target.style.background = getColor();
-        }, 1);
     }
 }
 
@@ -108,8 +106,7 @@ function makeRow (gridSize) {
 
         let cell = document.createElement('div');
         cell.classList.add('draw-box');
-        cell.addEventListener(mouseBehavior, e => applyColor(e));
-        cell.addEventListener('mouseover', e => target = e.target);
+        cell.addEventListener('mouseenter', applyColor);
         
         row.appendChild(cell);
     }
@@ -119,74 +116,45 @@ function makeRow (gridSize) {
 
 function changeGrid (gridSize, gridClass) {
 
-    clearGridColor()
     clearGrid()
     divs.gridWrapper.classList.add(gridClass);
 
     for (let rows = gridSize; rows > 0; rows--) {
 
-        let row = makeRow(gridSize, mouseBehavior);
+        let row = makeRow(gridSize);
+        
         divs.gridWrapper.appendChild(row);
     }
 }
 
-//Change mouse behavior between press and drag, and hover
-
-function changeMouseBehavior(buttonToggled, evt) {
-
-    let drawBoxes = document.querySelectorAll('.draw-box');
-    let gridSize = parseInt(document.querySelector('.grid-picker.selected').innerHTML);
-    let gridClass = document.querySelector('.grid-picker.selected').classList[0];
-
-    if (buttonToggled === true) {
-        
-        evt.target.classList.remove('selected');
-        mouseBehavior = 'mouseover';
-        changeGrid(gridSize, gridClass);
-        // document.removeEventListener('mouseup', () => clearInterval(colorInterval));
-        // drawBoxes.forEach(box => box.removeEventListener('mousedown', e => applyColor(e)));
-        // drawBoxes.forEach(box => box.removeEventListener('mouseover', e => target = e.target));
-        // drawBoxes.forEach(box => box.addEventListener('mouseover', e => applyColor(e)))
-
-    } else if (buttonToggled === false) {
-        
-        evt.target.classList.add('selected');
-        mouseBehavior = 'mousedown';
-        changeGrid(gridSize, gridClass);
-        // document.addEventListener('mouseup', () => clearInterval(colorInterval));
-        // drawBoxes.forEach(box => box.removeEventListener('mouseover', e => applyColor(e)));
-        // drawBoxes.forEach(box => box.addEventListener('mouseover', e => target = e.target));
-        // drawBoxes.forEach(box => box.addEventListener('mousedown', e => applyColor(e)))
-    }
-    
-    // if (mouseBehavior = 'mouseover') {
-        
-    //     document.removeEventListener('mouseup', () => clearInterval(colorInterval));
-    //     drawBoxes.forEach(box => box.removeEventListener('mousedown', e => applyColor(e)));
-    //     drawBoxes.forEach(box => box.removeEventListener('mouseover', e => target = e.target));
-    //     drawBoxes.forEach(box => box.addEventListener('mouseover', e => applyColor(e)))
-
-    // } else if (mouseBehavior = 'mousedown') {
-
-    //     document.addEventListener('mouseup', () => clearInterval(colorInterval));
-    //     drawBoxes.forEach(box => box.removeEventListener('mouseover', e => applyColor(e)));
-    //     drawBoxes.forEach(box => box.addEventListener('mouseover', e => target = e.target));
-    //     drawBoxes.forEach(box => box.addEventListener('mousedown', e => applyColor(e)))
-    // }
-}
+//Handle button presses and toggles
 
 function changeButtonSelected(evt, buttonGroup) {
 
     if (buttonGroup === 'grid-picker') {
 
-        divs.gridPickers.forEach(picker => picker.classList.remove('selected'));
+        divs.gridPickerButtons.forEach(picker => picker.classList.remove('selected'));
         evt.target.classList.add('selected');
 
     } else if (buttonGroup === 'color-picker') {
         
-        console.log(divs.colorPickers);
-        divs.colorPickers.forEach(picker => picker.classList.remove('selected'));
+        divs.colorPickerButtons.forEach(picker => picker.classList.remove('selected'));
         evt.target.classList.add('selected'); 
+    
+    } else if (buttonGroup === 'mouse-down') {
+
+        let buttonToggled = evt.target.classList.contains('selected');
+
+        if (buttonToggled === true) {
+        
+            evt.target.classList.remove('selected');
+    
+        } else if (buttonToggled === false) {
+            
+            evt.target.classList.add('selected');
+        }
+        
+        return buttonToggled;
     }
 }
 
@@ -209,10 +177,9 @@ function handleButtonPress (evt) {
 
         clearGridColor();
 
-    } else if (evt.target.classList.contains('mouse-press')) {
+    } else if (evt.target.classList.contains('mouse-down')) {
 
-        let buttonToggled = evt.target.classList.contains('selected');
-        changeMouseBehavior(buttonToggled, evt);
+        changeButtonSelected(evt, 'mouse-down');
     }
 }
 
