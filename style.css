@@ -89,6 +89,8 @@ h3 {
 }
 
 .clear.button {
+    color: rgb(49, 32, 13);;
+    background-color: rgb(250, 198, 145);
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -100,8 +102,9 @@ h3 {
 
 
 .button.selected {
-    color:rgb(252, 210, 210);
+    color:rgb(255, 233, 233);
     background-color: rgb(182, 68, 68);
+    border-color:  rgb(182, 68, 68);
 }
 
 /* Cell sizes for each grid size */
