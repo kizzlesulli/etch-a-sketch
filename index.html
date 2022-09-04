@@ -15,10 +15,15 @@
         <div class="selection-wrapper">
             <h3>Grid Size</h3>
             <div class="grid-size">
+                <p class="slider-value">16 x 16</p>
+                <input type="range" name="grid-slider" class="grid-picker" step="16" min="16" max="128" value="16">
+            </div>
+            <!-- Input grid size with buttons
+            <div class="grid-size">
                 <div class="sixteen grid-picker button selected">16</div>
                 <div class="thirty-two grid-picker button">32</div>
                 <div class="sixty-four grid-picker button"> 64</div>
-            </div>
+            </div> -->
             <h3>Colors</h3>
             <div class="black color-picker button selected">Black</div>
             <div class="rainbow color-picker button">Rainbow</div>
@@ -27,9 +32,9 @@
             <h3>Toggle</h3>
             <div class="mouse-down button">Click n'Draw</div>
         </div>
-        <div class="grid-wrapper sixteen">
-            <!-- Default 16 x 16 grid of boxes to draw with -->
-            <!-- <div class="grid-row">
+        <div class="grid-wrapper">
+            <!-- Default grid row and cell setup
+            <div class="grid-row">
                 <div class="draw-box cell"></div>
             </div> -->
         </div>
