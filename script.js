@@ -5,6 +5,11 @@ const divs = {
 
 //Change grid layout with user input
 
+function applyColor() {
+    let color = getColorSelection();
+        
+} 
+
 function createGrid (gridSize) {
 
 
@@ -26,7 +31,7 @@ function createGrid (gridSize) {
             let cell = document.createElement('div');
             cell.classList.add('draw-box');
 
-            cells.addEventListener('mouseover', e => e. target.style.background = 'black');
+            cells.addEventListener('mouseover', applyColor());
 
             row.appendChild(cell);
         }
