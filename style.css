@@ -39,13 +39,20 @@ h3 {
     font-size: 24px;
     padding: 0px;
     margin-top: 0px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .grid-size {
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.grid-size > p {
+    font-size: 18px;
+    margin: 0px;
 }
 
 /* Grid styling */
@@ -78,6 +85,11 @@ h3 {
     text-align: center;
 }
 
+input {
+    width: 125px;
+    color: rgb(253, 191, 124);
+}
+
 .grid-picker.button {
     width: 25px;
     padding: 5px;
@@ -92,14 +104,13 @@ h3 {
     color: rgb(49, 32, 13);;
     background-color: rgb(253, 219, 184);
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .mouse-down.button {
     width: 125px;
     padding: 5px;
 }
-
 
 .button.selected {
     color:rgb(255, 233, 233);
@@ -109,7 +120,7 @@ h3 {
 
 /* Cell sizes for each grid size */
 
-.sixteen .grid-row .draw-box {
+/* .sixteen .grid-row .draw-box {
     width: 32px;
     height: 32px;
 }
@@ -121,4 +132,4 @@ h3 {
 .sixty-four .grid-row .draw-box {
     width: 8px;
     height: 8px;
-}
+} */
