@@ -1,42 +1,63 @@
 const divs = {
+    clear: document.querySelector('.clear'),
+    gridSixteen: document.querySelector('.sixteen'),
+    gridThirtytwo: document.querySelector('.thirty-two'),
+    gridSixtyfour: document.querySelector('.sixty-four'),
+    colorBlack: document.querySelector('.black'),
+    colorRainbow: document.querySelector('.rainbow'),
     gridWrapper: document.querySelector('.grid-wrapper'),
+    buttons: document.querySelectorAll('.button')
 }
 
 //Change color with user input
 
-function getColorSelection () {
+let color = 'black';
 
-    let color;
+function getRainbowColor () {
 
-    Math.random
+    let randSeven = Math.floor(Math.random() * 7);
+    
+    switch (randSeven) {
+        case 0: 
+            return 'fc0303'
+        case 1:
+            return 'fc6b03'
+        case 2:
+            return 'fcf003'
+        case 3:
+            return '03fc18'
+        case 4:
+            return '036ffc'
+        case 5:
+            return '4e03fc'
+        case 6:
+            return 'fc03f4'
+    }
 }
 
 function applyColor (evt) {
     
-    //let color = getColor();
-
-    evt.target.style.background = 'black';
-
-    if (color = 'black') {
-        
-        evt.target.style.background = 'black';
-    } else if(colorSelected = 'rainbow'); {
+    if (color === 'black') {
 
         evt.target.style.background = 'black';
+    
+    } else if (color === 'rainbow') {
+
+        let rainbowColor = getRainbowColor();
+
+        evt.target.style.background = '#' + rainbowColor;
     }
-
-    //red #fc0303
-    //orange #fc6b03
-    //yellow #fcf003
-    //green #03fc18
-    //blue #036ffc
-    //purple #4e03fc
-    //pink #fc03f4
 } 
 
 //Change grid layout with user input
 
-function clearGrid () {
+function clearGridColor() {
+    
+    let drawBoxes = document.querySelectorAll('.draw-box');
+    drawBoxes.forEach(box => box.style.background = 'white');
+}
+
+function clearGrid() {
     
     divs.gridWrapper.innerHTML = '';
     divs.gridWrapper.classList.remove('sixteen');
@@ -44,40 +65,59 @@ function clearGrid () {
     divs.gridWrapper.classList.remove('sixty-four');
 }
 
-function makeRow () {
+function makeRow (gridSize) {
 
+    let row = document.createElement('div');
+    row.classList.add('grid-row');
+
+    for (let cells = gridSize; cells > 0; cells--) {
+
+        let cell = document.createElement('div');
+        cell.classList.add('draw-box');
+        cell.addEventListener('mouseover', e => applyColor(e));
+
+        row.appendChild(cell);
+    }
+
+    return row;
 }
 
-function createGrid (gridSize) {
+function changeGrid (gridSize, gridClass) {
 
-    clearGrid();
-    
-    divs.gridWrapper.classList.add('sixteen');
+    clearGridColor()
+    clearGrid()
+    divs.gridWrapper.classList.add(gridClass);
 
     for (let rows = gridSize; rows > 0; rows--) {
 
-        let row = document.createElement('div');
-        row.classList.add('grid-row');
-
-        for (let cells = gridSize; cells > 0; cells--) {
-
-            let cell = document.createElement('div');
-            cell.classList.add('draw-box');
-
-            console.log(cell);
-            cell.addEventListener('mouseover', e => applyColor(e));
-
-            row.appendChild(cell);
-        }
-        console.log(row);
+        let row = makeRow(gridSize);
         divs.gridWrapper.appendChild(row);
     }
 }
 
 
+divs.buttons.forEach(button => button.addEventListener('click', e => {
+
+    if (e.target.classList.contains('grid-picker')) {
+
+        let gridSize = parseInt(e.target.innerHTML);
+        let gridClass = e.target.classList[0];
+
+        changeGrid(gridSize, gridClass);
+
+    } else if (e.target.classList.contains('color-picker')) {
+
+        color = e.target.classList[0]; 
+
+    } else if (e.target.classList.contains('clear')) {
+
+        clearGridColor();
+    }
+}));
+
 //Drag while hovering
 
-createGrid(16);
+changeGrid(16, 'sixteen');
 
 //Draw while mousedown
 //Mouseup fails to trigger when cursor gets stuck dragging objects
