@@ -8,7 +8,6 @@ const divs = {
 }
 
 //Global configuration variables
-
 let mouseDown; //boolean changes with mousedown and mouseup events
 
 //Change color with user input
@@ -19,19 +18,19 @@ function getRainbowHex () {
     
     switch (randSeven) {
         case 0: 
-            return 'fc0303'
+            return 'fc0303';
         case 1:
-            return 'fc6b03'
+            return 'fc6b03';
         case 2:
-            return 'fcf003'
+            return 'fcf003';
         case 3:
-            return '03fc18'
+            return '03fc18';
         case 4:
-            return '036ffc'
+            return '036ffc';
         case 5:
-            return '4e03fc'
+            return '4e03fc';
         case 6:
-            return 'fc03f4'
+            return 'fc03f4';
     }
 }
 
@@ -43,7 +42,7 @@ function getColor () {
 
         let rainbowColor = '#' + getRainbowHex();
         
-        return rainbowColor
+        return rainbowColor;
     
     } else {
         
@@ -53,7 +52,7 @@ function getColor () {
 
 function applyColor (evt) {
 
-    //Check if mouse drag is toggled
+    //Check if mouse down is toggled
     //Mouse can get stuck dragging page elements and breaks mouseup event listener
     let mouseDownToggle = divs.mouseDownToggle.classList.contains('selected');
 
@@ -76,7 +75,7 @@ function applyColor (evt) {
 
 //Change grid layout with user input
 
-function clearGrid() {
+function clearGrid () {
     
     divs.gridWrapper.innerHTML = '';
     divs.gridWrapper.classList.remove('sixteen');
@@ -104,7 +103,7 @@ function makeRow (gridSize) {
 
 function createGrid (gridSize, gridClass) {
 
-    clearGrid()
+    clearGrid();
     divs.gridWrapper.classList.add(gridClass);
 
     for (let rows = gridSize; rows > 0; rows--) {
@@ -115,7 +114,7 @@ function createGrid (gridSize, gridClass) {
     }
 }
 
-function clearGridColor() {
+function clearGridColor () {
     
     let drawBoxes = document.querySelectorAll('.draw-box');
     drawBoxes.forEach(box => box.style.background = 'white');
@@ -123,7 +122,7 @@ function clearGridColor() {
 
 //Handle button presses and toggles
 
-function changeButtonSelected(evt, buttonGroup) {
+function changeButtonSelected (evt, buttonGroup) {
 
     if (buttonGroup === 'grid-picker') {
 
