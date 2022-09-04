@@ -1,5 +1,7 @@
 const divs = {
+    gridSilder: document.querySelector('.grid-picker'),
     gridWrapper: document.querySelector('.grid-wrapper'),
+    gridSizeDisplay: document.querySelector('.slider-value'),
     mouseDownToggle: document.querySelector('.mouse-down'),
     //Arrays
     gridPickerButtons: document.querySelectorAll('.grid-picker'),
@@ -78,9 +80,11 @@ function applyColor (evt) {
 function clearGrid () {
     
     divs.gridWrapper.innerHTML = '';
-    divs.gridWrapper.classList.remove('sixteen');
-    divs.gridWrapper.classList.remove('thirty-two');
-    divs.gridWrapper.classList.remove('sixty-four');
+    
+    //For grid size inputs through buttons
+    // divs.gridWrapper.classList.remove('sixteen');
+    // divs.gridWrapper.classList.remove('thirty-two');
+    // divs.gridWrapper.classList.remove('sixty-four');
 }
 
 function makeRow (gridSize) {
@@ -90,8 +94,13 @@ function makeRow (gridSize) {
 
     for (let cells = gridSize; cells > 0; cells--) {
 
+        //width of whole grid is 512px
+        let cellSize = 512 / gridSize;
+
         let cell = document.createElement('div');
         cell.classList.add('draw-box');
+        cell.style.width = cellSize;
+        cell.style.height = cellSize;
         cell.addEventListener('mouseenter', applyColor);
         cell.addEventListener('mousedown', applyColor);
         
@@ -101,10 +110,14 @@ function makeRow (gridSize) {
     return row;
 }
 
-function createGrid (gridSize, gridClass) {
+function createGrid () {
+
+    let gridSize = parseInt(divs.gridSilder.value);
 
     clearGrid();
-    divs.gridWrapper.classList.add(gridClass);
+    
+    //For grid size inputs through buttons
+    // divs.gridWrapper.classList.add(gridClass);
 
     for (let rows = gridSize; rows > 0; rows--) {
 
@@ -176,6 +189,12 @@ function handleButtonPress (evt) {
     }
 }
 
+function handleSilderInput (evt) {
+
+    let gridSize = evt.target.value;
+    divs.gridSizeDisplay.innerText = `${gridSize} x ${gridSize}`;
+}
+
 
 function toggleMousePosition(evt) {
 
@@ -189,10 +208,13 @@ function toggleMousePosition(evt) {
 
 divs.buttons.forEach(button => button.addEventListener('click', handleButtonPress));
 
+//Event listeners for grid size slider input; not needed for button input
+divs.gridSilder.addEventListener('input', handleSilderInput);
+divs.gridSilder.addEventListener('click', createGrid);
+
 //Event listeners to draw when mouse down selected
-divs.gridWrapper.addEventListener('mousedown', toggleMousePosition);
 //Mouse can get stuck dragging page elements and breaks mouseup event listener
+divs.gridWrapper.addEventListener('mousedown', toggleMousePosition);
 document.addEventListener('mouseup', toggleMousePosition);
 
-//Create grid on page open
-createGrid(16, 'sixteen');
+createGrid();
