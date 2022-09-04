@@ -1,14 +1,15 @@
 body {
     margin: 0px;
     height: 100vh;
-    background-color: beige;
+    background-color: rgb(253, 233, 211);
 }
 
 .title {
+    color: rgb(92, 73, 55);
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
     font-weight: bolder;
-    font-size: 32px;
+    font-size: 45px;
     padding: 30px;
 }
 
@@ -65,8 +66,9 @@ h3 {
 /* Sidebar selection button styling */
 
 .button {
-    color: aliceblue;
-    background-color:rgb(93, 93, 94);
+    color: rgb(66, 46, 46);
+    background-color:rgb(250, 236, 234);
+    border: solid 2px rgb(107, 77, 77);
     border-radius: 6px;
     margin: 3px;
     text-align: center;
@@ -83,10 +85,8 @@ h3 {
 }
 
 .button.selected {
-    
     color:rgb(252, 210, 210);
     background-color: rgb(182, 68, 68);
-    
 }
 
 /* Cell sizes for each grid size */
