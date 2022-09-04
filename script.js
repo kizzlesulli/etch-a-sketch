@@ -115,6 +115,9 @@ divs.buttons.forEach(button => button.addEventListener('click', e => {
     } else if (e.target.classList.contains('clear')) {
 
         clearGridColor();
+    } else if (e.target.classList.contains('erase')) {
+
+        color = e.target.classList[0];
     }
 }));
 
