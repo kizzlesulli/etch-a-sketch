@@ -42,6 +42,6 @@ body {
 }
 
 .sixteen .grid-row .draw-box {
-    width: 128px;
-    height: 128px;
+    width: 32px;
+    height: 32px;
 }
