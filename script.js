@@ -54,17 +54,21 @@ function getColor () {
 function applyColor (evt) {
 
     //Check if mouse drag is toggled
-    //Mouse dragging page elements breaks mouseup event listener
+    //Mouse can get stuck dragging page elements and breaks mouseup event listener
     let mouseDownToggle = divs.mouseDownToggle.classList.contains('selected');
 
     if (mouseDownToggle === true) {
 
-        if (mouseDown === true) {
+        if (evt.type === 'mousedown') {
+
+            evt.target.style.background = getColor();
+
+        } else if (mouseDown === true) {
             
             evt.target.style.background = getColor();
         }
     
-    } else {
+    } else if (evt.type === 'mouseenter') {
         
         evt.target.style.background = getColor();
     }
@@ -90,6 +94,7 @@ function makeRow (gridSize) {
         let cell = document.createElement('div');
         cell.classList.add('draw-box');
         cell.addEventListener('mouseenter', applyColor);
+        cell.addEventListener('mousedown', applyColor);
         
         row.appendChild(cell);
     }
@@ -187,7 +192,7 @@ divs.buttons.forEach(button => button.addEventListener('click', handleButtonPres
 
 //Event listeners to draw when mouse down selected
 divs.gridWrapper.addEventListener('mousedown', toggleMousePosition);
-//Mouse stuck dragging page elements breaks mouseup event listener
+//Mouse can get stuck dragging page elements and breaks mouseup event listener
 document.addEventListener('mouseup', toggleMousePosition);
 
 //Create grid on page open
