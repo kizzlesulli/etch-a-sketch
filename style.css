@@ -82,13 +82,14 @@ h3 {
     padding: 5px;
 }
 
-.color-picker.button, .clear.button {
+.color-picker.button, .clear.button, .mouse-press.button {
     width: 75px;
     padding: 5px;  
 }
 
 .clear.button {
     margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .button.selected {
