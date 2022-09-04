@@ -54,6 +54,7 @@ function getColor () {
 function applyColor (evt) {
 
     //Check if mouse drag is toggled
+    //Mouse dragging page elements breaks mouseup event listener
     let mouseDownToggle = divs.mouseDownToggle.classList.contains('selected');
 
     if (mouseDownToggle === true) {
@@ -186,6 +187,7 @@ divs.buttons.forEach(button => button.addEventListener('click', handleButtonPres
 
 //Event listeners to draw when mouse down selected
 divs.gridWrapper.addEventListener('mousedown', toggleMousePosition);
+//Mouse stuck dragging page elements breaks mouseup event listener
 document.addEventListener('mouseup', toggleMousePosition);
 
 //Create grid on page open
