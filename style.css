@@ -95,7 +95,7 @@ h3 {
     margin-bottom: 20px;
 }
 
-.mouse-press.button {
+.mouse-down.button {
     width: 125px;
     padding: 5px;
 }
