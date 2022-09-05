@@ -136,13 +136,8 @@ function clearGridColor () {
 //Handle button presses and toggles
 
 function changeButtonSelected (evt, buttonGroup) {
-
-    if (buttonGroup === 'grid-picker') {
-
-        divs.gridPickerButtons.forEach(picker => picker.classList.remove('selected'));
-        evt.target.classList.add('selected');
-
-    } else if (buttonGroup === 'color-picker') {
+    
+    if (buttonGroup === 'color-picker') {
         
         divs.colorPickerButtons.forEach(picker => picker.classList.remove('selected'));
         evt.target.classList.add('selected'); 
@@ -159,23 +154,19 @@ function changeButtonSelected (evt, buttonGroup) {
             
             evt.target.classList.add('selected');
         }
-        
-        return buttonToggled;
     }
+
+    //For grid size inputs through buttons
+    // if (buttonGroup === 'grid-picker') {
+
+    //     divs.gridPickerButtons.forEach(picker => picker.classList.remove('selected'));
+    //     evt.target.classList.add('selected');
+    // } 
 }
 
 function handleButtonPress (evt) {
-    
-    if (evt.target.classList.contains('grid-picker')) {
 
-        changeButtonSelected(evt, 'grid-picker');
-
-        let gridSize = parseInt(evt.target.innerHTML);
-        let gridClass = evt.target.classList[0];
-
-        createGrid(gridSize, gridClass); 
-
-    } else if (evt.target.classList.contains('color-picker')) {
+    if (evt.target.classList.contains('color-picker')) {
 
         changeButtonSelected(evt, 'color-picker');
 
@@ -187,6 +178,17 @@ function handleButtonPress (evt) {
 
         changeButtonSelected(evt, 'mouse-down');
     }
+
+    //For grid size inputs through buttons
+    // if (evt.target.classList.contains('grid-picker')) {
+
+    //     changeButtonSelected(evt, 'grid-picker');
+
+    //     let gridSize = parseInt(evt.target.innerHTML);
+    //     let gridClass = evt.target.classList[0];
+
+    //     createGrid(gridSize, gridClass); 
+    // } 
 }
 
 function handleSilderInput (evt) {
